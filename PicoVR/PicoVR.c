@@ -2,11 +2,29 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 
+#include "engine/engine_globals.h"
+
 int main()
 {
     stdio_init_all();
-    sleep_ms(5000); // Waits for USB connection
 
+    vertex32_t v;
+    v.x = 0.0f;
+    v.y = 0.0f;
+    v.z = 6.9f;
+
+    // TODO
+    // 1) Initialize both cores
+    // 2) Initialize a global vars
+    // 3) Loop (w.r.t. my previous OpenGL stuff)
+    //      Update camera
+    //      Process inputs
+    //      Transform vertices
+    //      Rasterization
+    //          What triangles are seen vs occluded.
+    //          Shading those pixels that represent a visible triangle.
+
+    // Default blink script for debugging
     if (cyw43_arch_init())
     {
         printf("Wi-Fi init failed");
@@ -19,20 +37,8 @@ int main()
         sleep_ms(250);
         cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
         sleep_ms(250);
-        printf("YO MAMA");
-        fflush(stdout);
+        printf("Vertex v: %f, %f, %f", v.x, v.y, v.z);
     }
-
-    // TODO
-    // 1) Initialize both cores
-    // 2) Initialize a global vars
-    // 3) Loop (w.r.t. my previous OpenGL stuff)
-    //      Update camera
-    //      Process inputs
-    //      Transform vertices
-    //      Rasterization
-    //          What triangles are seen vs occluded.
-    //          Shading those pixels that represent a visible triangle.
 
     /**
      * Given that this is a VR application, hopefully I can integrate
