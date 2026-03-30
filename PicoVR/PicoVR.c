@@ -2,16 +2,15 @@
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 
-#include "engine/engine_globals.h"
+#include "engine/primitives.h"
+#include "engine/math.h"
 
 int main()
 {
     stdio_init_all();
 
-    vertex32_t v;
-    v.x = 0.0f;
-    v.y = 0.0f;
-    v.z = 6.9f;
+    // Have to wait for some time to get UART set up.
+    sleep_ms(2000);
 
     // TODO
     // 1) Initialize both cores
@@ -24,21 +23,41 @@ int main()
     //          What triangles are seen vs occluded.
     //          Shading those pixels that represent a visible triangle.
 
-    // Default blink script for debugging
-    if (cyw43_arch_init())
-    {
-        printf("Wi-Fi init failed");
-        return -1;
-    }
+    /**
+     * @note Coordinate System
+     * Follow RHR. Camera points down -z. Thumb is x. Index is y. Middle is z.
+     *
+     * @note Winding order
+     * Always list vertices in CCW order. Pretend you are looking at the triangle
+     * face on, then list them in CCW winding order.
+     */
 
-    while (true)
-    {
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        sleep_ms(250);
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        sleep_ms(250);
-        printf("Vertex v: %f, %f, %f", v.x, v.y, v.z);
-    }
+    /** @todo Maybe move these to global constants. Maybe put them in SRAM all the time
+     * because we will most likely transform these guys a lot. Caching here should be
+     * important.
+     */
+    vec3_t v0 = {0.0f, 0.0f, -2.0f};
+    vertex32_t v1 = {4.0f, 0.0f, -2.0f};
+    vertex32_t v2 = {2.0f, 2.0f, -2.0f};
+    triangle32_t t = {v0, v1, v2};
+    mat4_t m;
+    printf("v1 * v2 = %f \n", dot3(&v1, &v2));
+    printf("%f %f %f %f\n", m.r0[0], m.r0[1], m.r0[2], m.r0[3]);
+
+    // // Default blink script for debugging
+    // if (cyw43_arch_init())
+    // {
+    //     printf("Wi-Fi init failed");
+    //     return -1;
+    // }
+
+    // while (true)
+    // {
+    //     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+    //     sleep_ms(250);
+    //     cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+    //     sleep_ms(250);
+    // }
 
     /**
      * Given that this is a VR application, hopefully I can integrate
