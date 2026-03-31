@@ -4,6 +4,7 @@
 
 #include "engine/primitives.h"
 #include "engine/math.h"
+#include "engine/utils.h"
 
 int main()
 {
@@ -39,10 +40,12 @@ int main()
     vec3_t v0 = {0.0f, 0.0f, -2.0f};
     vertex32_t v1 = {4.0f, 0.0f, -2.0f};
     vertex32_t v2 = {2.0f, 2.0f, -2.0f};
+    vec4_t v3 = {1.0f, 2.0f, 3.0f, 4.0f};
     triangle32_t t = {v0, v1, v2};
     mat4_t m;
-    printf("v1 * v2 = %f \n", dot3(&v1, &v2));
-    printf("%f %f %f %f\n", m.r0[0], m.r0[1], m.r0[2], m.r0[3]);
+    m.m[3][1] = 69.0f;
+    print_vec3(&v2);
+    print_mat4(&m);
 
     // // Default blink script for debugging
     // if (cyw43_arch_init())
@@ -60,38 +63,13 @@ int main()
     // }
 
     /**
-     * Given that this is a VR application, hopefully I can integrate
-     * multiple players connected over Bluetooth or WiFi. But not yet
-     * though.
-
-        // Initialise the Wi-Fi chip
-        if (cyw43_arch_init())
-        {
-            printf("Wi-Fi init failed\n");
-            return -1;
-        }
-
-        // Enable wifi station
-        cyw43_arch_enable_sta_mode();
-
-        printf("Connecting to Wi-Fi...\n");
-        if (cyw43_arch_wifi_connect_timeout_ms("Your Wi-Fi SSID", "Your Wi-Fi Password", CYW43_AUTH_WPA2_AES_PSK, 30000))
-        {
-            printf("failed to connect.\n");
-            return 1;
-        }
-        else
-        {
-            printf("Connected.\n");
-            // Read the ip address in a human readable way
-            uint8_t *ip_address = (uint8_t *)&(cyw43_state.netif[0].ip_addr.addr);
-            printf("IP address %d.%d.%d.%d\n", ip_address[0], ip_address[1], ip_address[2], ip_address[3]);
-        }
-
-        while (true)
-        {
-            printf("Hello, world!\n");
-            sleep_ms(1000);
-        }
-    */
+     * @note From https://stackoverflow.com/questions/1674005/fast-4x4-matrix-multiplication-in-c
+     * - "Don't inline the function. Your matrix multiplication generates quite a bit of code as it's unrolled,
+     *    and the ARM only has a very tiny instruction cache. Excessive inlining can make your code slower
+     *    because the CPU will be busy loading code into the cache instead of executing it."
+     * - "Use the restrict keyword to tell the compiler that the source- and destination pointers don't overlap
+     *    in memory. Currently the compiler is forced to reload every source value from memory whenever a result
+     *    is written because it has to assume that source and destination may overlap or even point to the same
+     *    memory."
+     */
 }

@@ -75,7 +75,7 @@ typedef struct triangle32_t
     vertex32_t v2;
 } triangle32_t;
 
-typedef struct mat4_t
+typedef union mat4_t
 {
 
     /**
@@ -84,14 +84,14 @@ typedef struct mat4_t
      * Struct mat4_t provides data for a 4x4 matrix. Each element
      * is a 32-bit float.
      *
-     * @todo Make this possibly a union type
+     * @details
+     * The m member field specifies the underlying matrix itself. The
+     * m_flat provides another view of the underlying values.
      *
      */
 
-    float r0[4];
-    float r1[4];
-    float r2[4];
-    float r3[4];
+    float m[4][4];
+    float m_flat[16];
 } mat4_t;
 
 #endif
