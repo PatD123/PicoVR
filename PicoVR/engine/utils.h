@@ -8,8 +8,30 @@
 #define ENGINE_UTILS
 
 #include <stdio.h>
+#include <time.h>
 
 #include "engine/primitives.h"
+
+int time_taken(clock_t start, clock_t end)
+{
+
+    /**
+     * @brief time_taken
+     * Given a start clock time and an end clock time, we compute the amount of time
+     * a certain set of instructions took on the processor. I'm going to use this
+     * hopefully for optimization purposes.
+     *
+     * @details
+     * clock_t start = clock();
+     * ... do something ...
+     * clock_t end = clock();
+     * time_taken(start, end);
+     */
+
+    clock_t diff = start - end;
+    int msec = diff * 1000 / CLOCKS_PER_SEC;
+    printf("Time taken %d seconds %d milliseconds", msec / 1000, msec % 1000);
+}
 
 void print_vec3(const vec3_t *const v)
 {
