@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(PicoVR PicoVR.c )
+add_executable(PicoVR PicoVR.c engine/camera.c)
 
 pico_set_program_name(PicoVR "PicoVR")
 pico_set_program_version(PicoVR "0.1")

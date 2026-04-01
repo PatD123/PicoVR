@@ -5,6 +5,7 @@
 #include "engine/primitives.h"
 #include "engine/math.h"
 #include "engine/utils.h"
+#include "engine/camera.h"
 
 int main()
 {
@@ -46,11 +47,8 @@ int main()
                  {1.0f, 2.0f, 1.0f, 1.0f},
                  {1.0f, 1.0f, 2.0f, 1.0f},
                  {1.0f, 1.0f, 1.0f, 2.0f}}};
-    print_vec3(&v2);
-    print_mat4(&m);
-    vec4_t mat_mul_vec = mat4_mul_vec4(&m, &v3);
-    print_vec4(&mat_mul_vec);
-    fflush(stdout);
+    Camera_t cam;
+    camera_init(&cam);
 
     // // Default blink script for debugging
     // if (cyw43_arch_init())

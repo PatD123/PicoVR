@@ -12,7 +12,7 @@
 
 #include "engine/primitives.h"
 
-int time_taken(clock_t start, clock_t end)
+static int time_taken(clock_t start, clock_t end)
 {
 
     /**
@@ -35,7 +35,7 @@ int time_taken(clock_t start, clock_t end)
     printf("Time taken: %ds %dms %dus\n", s, ms, us);
 }
 
-void print_vec3(const vec3_t *const v)
+static void print_vec3(const vec3_t *const v)
 {
 
     /**
@@ -45,7 +45,7 @@ void print_vec3(const vec3_t *const v)
     printf("[%f %f %f]\n", v->x, v->y, v->z);
 }
 
-void print_vec4(const vec4_t *const v)
+static void print_vec4(const vec4_t *const v)
 {
 
     /**
@@ -55,7 +55,7 @@ void print_vec4(const vec4_t *const v)
     printf("[%f %f %f %f]\n", v->x, v->y, v->z, v->w);
 }
 
-void print_mat4(const mat4_t *const m)
+static void print_mat4(const mat4_t *const m)
 {
 
     /**
