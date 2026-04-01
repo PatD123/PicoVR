@@ -11,7 +11,7 @@ int main()
     stdio_init_all();
 
     // Have to wait for some time to get UART set up.
-    sleep_ms(2000);
+    sleep_ms(4000);
 
     // TODO
     // 1) Initialize both cores
@@ -42,10 +42,15 @@ int main()
     vertex32_t v2 = {2.0f, 2.0f, -2.0f};
     vec4_t v3 = {1.0f, 2.0f, 3.0f, 4.0f};
     triangle32_t t = {v0, v1, v2};
-    mat4_t m;
-    m.m[3][1] = 69.0f;
+    mat4_t m = {{{2.0f, 1.0f, 1.0f, 1.0f},
+                 {1.0f, 2.0f, 1.0f, 1.0f},
+                 {1.0f, 1.0f, 2.0f, 1.0f},
+                 {1.0f, 1.0f, 1.0f, 2.0f}}};
     print_vec3(&v2);
     print_mat4(&m);
+    vec4_t mat_mul_vec = mat4_mul_vec4(&m, &v3);
+    print_vec4(&mat_mul_vec);
+    fflush(stdout);
 
     // // Default blink script for debugging
     // if (cyw43_arch_init())

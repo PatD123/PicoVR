@@ -28,9 +28,11 @@ int time_taken(clock_t start, clock_t end)
      * time_taken(start, end);
      */
 
-    clock_t diff = start - end;
-    int msec = diff * 1000 / CLOCKS_PER_SEC;
-    printf("Time taken %d seconds %d milliseconds", msec / 1000, msec % 1000);
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    int s = (int)seconds;
+    int ms = (int)((seconds - s) * 1e3);
+    int us = (int)((seconds - s - ms / 1e3) * 1e6);
+    printf("Time taken: %ds %dms %dus\n", s, ms, us);
 }
 
 void print_vec3(const vec3_t *const v)
