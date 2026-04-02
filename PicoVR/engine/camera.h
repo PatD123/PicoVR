@@ -11,10 +11,18 @@
 #include "engine/primitives.h"
 
 // Camera globals (temporary)
-const static vec4_t CAMERA_POS = {0.0f, 0.0f, 0.0f, 1.0f};
-const static vec4_t CAMERA_FORWARD = {0.0f, 0.0f, -1.0f, 0.0f};
-const static vec4_t CAMERA_UP = {0.0f, 1.0f, 0.0f, 0.0f};
-const static vec4_t CAMERA_RIGHT = {1.0f, 0.0f, 0.0f, 0.0f};
+const static vec3_t CAMERA_POS = {1.0f, 1.0f, 1.0f};
+const static vec3_t CAMERA_UP = {0.0f, 1.0f, 0.0f};
+const static vec3_t CAMERA_FORWARD = {1.0f, 1.0f, 1.0f};
+
+/*
+
+r = u x f = <1.0, 0.0, -1.0>      --> <0.707, 0.0, -0.707>
+u = f x r = <-0.707, 1.4, -0.707> --> <-0.41, 0.81, -0.41>
+
+
+
+*/
 
 typedef struct Camera_t
 {
@@ -32,10 +40,10 @@ typedef struct Camera_t
      * @note MAKE SURE THAT THE CAM COORD AXES ARE NORMALIZED!
      */
 
-    vec4_t p;
-    vec4_t d;
-    vec4_t r;
-    vec4_t u;
+    vec3_t p;
+    vec3_t d;
+    vec3_t r;
+    vec3_t u;
 
 } Camera_t;
 

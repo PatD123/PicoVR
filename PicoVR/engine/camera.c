@@ -10,10 +10,11 @@ void camera_init(Camera_t *cam)
      */
 
     cam->p = CAMERA_POS;
-    cam->d = CAMERA_FORWARD;
-    cam->r = CAMERA_RIGHT;
-    cam->u = CAMERA_UP;
-    return;
+    cam->d = normalize(&CAMERA_FORWARD);
+    vec3_t cam_r = cross(&CAMERA_UP, &CAMERA_FORWARD);
+    cam->r = normalize(&cam_r);
+    vec3_t cam_u = cross(&CAMERA_FORWARD, &cam->r);
+    cam->u = normalize(&cam_u);
 }
 
 mat4_t get_view_mat(const Camera_t *cam)
@@ -29,9 +30,9 @@ mat4_t get_view_mat(const Camera_t *cam)
      * As a result, we have
      *          lookAt = rot_mat * transl_mat
      *          rot_mat =    [[R_x, U_x, D_x, 0],
-     *                        [R_x, U_x, D_x, 0],
-     *                        [R_x, U_x, D_x, 0],
-     *                        [R_x, U_x, D_x, 1]]
+     *                        [R_y, U_y, D_y, 0],
+     *                        [R_z, U_z, D_z, 0],
+     *                        [0, 0, 0, 1]]
      *          transl_mat = [[1, 0, 0, -P.x],
                               [0, 1, 0, -P.y],
                               [0, 0, 1, -P.z],
@@ -39,13 +40,15 @@ mat4_t get_view_mat(const Camera_t *cam)
      * where each mat is column-major.
      */
 
-    mat4_t view_mat = {{cam->r.x, cam->u.x, cam->d.x, 0},
-                       {cam->r.x, cam->u.x, cam->d.x, 0},
-                       {cam->r.x, cam->u.x, cam->d.x, 0},
-                       {0.0f, 0.0f, 0.0f, 1}};
+    mat4_t view_mat = {
+        .m = {{cam->r.x, cam->u.x, cam->d.x, 0},
+              {cam->r.y, cam->u.y, cam->d.y, 0},
+              {cam->r.z, cam->u.z, cam->d.z, 0},
+              {0.0f, 0.0f, 0.0f, 1}}};
+    printf("View mat\n");
+    print_mat4(&view_mat);
     view_mat.m[0][3] = dot3((vec3_t *)&view_mat.m[0], &(vec3_t){-cam->p.x, -cam->p.y, -cam->p.z});
     view_mat.m[1][3] = dot3((vec3_t *)&view_mat.m[1], &(vec3_t){-cam->p.x, -cam->p.y, -cam->p.z});
     view_mat.m[2][3] = dot3((vec3_t *)&view_mat.m[2], &(vec3_t){-cam->p.x, -cam->p.y, -cam->p.z});
-    view_mat.m[3][3] = dot3((vec3_t *)&view_mat.m[3], &(vec3_t){-cam->p.x, -cam->p.y, -cam->p.z});
     return view_mat;
 }
