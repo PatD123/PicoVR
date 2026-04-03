@@ -58,6 +58,7 @@ int main()
     printf("Sanity check view_mat * <0, 0, 0, 1>\n");
     out = mat4_mul_vec4(&view_mat, &(vec4_t){0.0f, 0.0f, 0.0f, 1.0f});
     print_vec4(&out);
+    printf("\n");
     fflush(stdout);
 
     // // Default blink script for debugging

@@ -28,23 +28,23 @@ mat4_t get_view_mat(const Camera_t *cam)
      * A camera's view matrix is computed by translating, then rotating
      * the world's coordinate frame to the camera's new coordinate frame.
      * As a result, we have
-     *          lookAt = rot_mat * transl_mat
-     *          rot_mat =    [[R_x, U_x, D_x, 0],
-     *                        [R_y, U_y, D_y, 0],
-     *                        [R_z, U_z, D_z, 0],
-     *                        [0, 0, 0, 1]]
+     *          view_mat = transl_mat * rot_mat
      *          transl_mat = [[1, 0, 0, -P.x],
                               [0, 1, 0, -P.y],
                               [0, 0, 1, -P.z],
                               [0, 0, 0,  1]]
+                rot_mat =    [[R_x, U_x, D_x, 0],
+     *                        [R_y, U_y, D_y, 0],
+     *                        [R_z, U_z, D_z, 0],
+     *                        [0, 0, 0, 1]]
      * where each mat is column-major.
      */
 
     mat4_t view_mat = {
-        .m = {{cam->r.x, cam->u.x, cam->d.x, 0},
-              {cam->r.y, cam->u.y, cam->d.y, 0},
-              {cam->r.z, cam->u.z, cam->d.z, 0},
-              {0.0f, 0.0f, 0.0f, 1}}};
+        .m = {{cam->r.x, cam->r.y, cam->r.z, 0.0f},
+              {cam->u.x, cam->u.y, cam->u.z, 0.0f},
+              {cam->d.x, cam->d.y, cam->d.z, 0.0f},
+              {0.0f, 0.0f, 0.0f, 1.0f}}};
     printf("View mat\n");
     print_mat4(&view_mat);
     view_mat.m[0][3] = dot3((vec3_t *)&view_mat.m[0], &(vec3_t){-cam->p.x, -cam->p.y, -cam->p.z});

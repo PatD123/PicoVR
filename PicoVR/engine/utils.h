@@ -68,7 +68,7 @@ static void print_mat4(const mat4_t *const m)
     printf("[[%f %f %f %f] \n", m->m_flat[0], m->m_flat[1], m->m_flat[2], m->m_flat[3]);
     printf(" [%f %f %f %f] \n", m->m_flat[4], m->m_flat[5], m->m_flat[6], m->m_flat[7]);
     printf(" [%f %f %f %f] \n", m->m_flat[8], m->m_flat[9], m->m_flat[10], m->m_flat[11]);
-    printf(" [%f %f %f %f]]\n", m->m_flat[12], m->m_flat[13], m->m_flat[4], m->m_flat[15]);
+    printf(" [%f %f %f %f]]\n", m->m_flat[12], m->m_flat[13], m->m_flat[14], m->m_flat[15]);
 }
 
 #endif
