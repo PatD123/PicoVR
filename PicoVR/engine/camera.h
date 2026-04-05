@@ -11,9 +11,9 @@
 #include "engine/primitives.h"
 
 // Camera globals (temporary)
-const static vec3_t CAMERA_POS = {1.0f, 1.0f, 1.0f};
+const static vec3_t CAMERA_POS = {0.0f, 0.0f, 1.0f};
 const static vec3_t CAMERA_UP = {0.0f, 1.0f, 0.0f};
-const static vec3_t CAMERA_FORWARD = {1.0f, 1.0f, 1.0f};
+const static vec3_t CAMERA_FORWARD = {0.0f, 0.0f, 1.0f};
 
 /*
 

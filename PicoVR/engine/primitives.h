@@ -7,6 +7,8 @@
 #ifndef ENGINE_PRIMITIVES
 #define ENGINE_PRIMITIVES
 
+#include <stdint.h>
+
 typedef struct vec3_t
 {
 
@@ -54,6 +56,8 @@ typedef struct vec4_t
     float z;
     float w;
 } vec4_t;
+
+typedef uint16_t color16_t;
 
 typedef struct triangle32_t
 {

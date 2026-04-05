@@ -35,7 +35,10 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(PicoVR PicoVR.c engine/camera.c)
+add_executable(PicoVR PicoVR.c 
+        engine/camera.c
+        engine/rasterize.c
+        engine/globals.c)
 
 pico_set_program_name(PicoVR "PicoVR")
 pico_set_program_version(PicoVR "0.1")
@@ -56,6 +59,7 @@ target_include_directories(PicoVR PRIVATE
 # Add any user requested libraries
 target_link_libraries(PicoVR 
         pico_cyw43_arch_lwip_threadsafe_background
+        pico_float
         )
 
 pico_add_extra_outputs(PicoVR)

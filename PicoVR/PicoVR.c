@@ -6,6 +6,8 @@
 #include "engine/math.h"
 #include "engine/utils.h"
 #include "engine/camera.h"
+#include "engine/rasterize.h"
+#include "engine/globals.h"
 
 int main()
 {
@@ -52,12 +54,12 @@ int main()
     mat4_t view_mat = get_view_mat(&cam);
     printf("Final view mat\n");
     print_mat4(&view_mat);
-    printf("Sanity check view_mat * from\n");
-    vec4_t out = mat4_mul_vec4(&view_mat, &(vec4_t){1.0f, 1.0f, 1.0f, 1.0f});
-    print_vec4(&out);
-    printf("Sanity check view_mat * <0, 0, 0, 1>\n");
-    out = mat4_mul_vec4(&view_mat, &(vec4_t){0.0f, 0.0f, 0.0f, 1.0f});
-    print_vec4(&out);
+
+    FRAMEBUFFER[0][0] = 69;
+
+    // Rasterization
+    printf("DEBUG");
+    rasterize(&t);
     printf("\n");
     fflush(stdout);
 

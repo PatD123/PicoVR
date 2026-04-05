@@ -6,7 +6,7 @@
 #ifndef ENGINE_MATH
 #define ENGINE_MATH
 
-#include <math.h>
+#include <pico/float.h>
 
 #include "engine/primitives.h"
 #include "engine/utils.h"
