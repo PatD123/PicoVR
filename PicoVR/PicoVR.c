@@ -16,6 +16,8 @@ int main()
     // Have to wait for some time to get UART set up.
     sleep_ms(4000);
 
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     // TODO
     // 1) Initialize both cores
     // 2) Initialize a global vars
@@ -40,9 +42,10 @@ int main()
      * because we will most likely transform these guys a lot. Caching here should be
      * important.
      */
-    vec3_t v0 = {0.0f, 0.0f, -2.0f};
-    vertex32_t v1 = {4.0f, 0.0f, -2.0f};
-    vertex32_t v2 = {2.0f, 2.0f, -2.0f};
+
+    vec3_t v0 = {-1.0f, 10.0f, -1.0f};
+    vertex32_t v1 = {1.0f, 10.0f, -1.0f};
+    vertex32_t v2 = {0.0f, 20.0f, -1.0f};
     vec4_t v3 = {1.0f, 2.0f, 3.0f, 4.0f};
     triangle32_t t = {v0, v1, v2};
     mat4_t m = {{{2.0f, 1.0f, 1.0f, 1.0f},
@@ -52,14 +55,26 @@ int main()
     Camera_t cam;
     camera_init(&cam);
     mat4_t view_mat = get_view_mat(&cam);
-    printf("Final view mat\n");
-    print_mat4(&view_mat);
-
-    FRAMEBUFFER[0][0] = 69;
-
-    // Rasterization
-    printf("DEBUG");
+    memset(&FRAMEBUFFER[0][0], 0, SCREEN_HEIGHT * SCREEN_WIDTH * sizeof(uint16_t));
+    // printf("RASTERIZING\n");
     rasterize(&t);
+    printf("P3\n");
+    printf("%i %i\n", SCREEN_WIDTH, SCREEN_HEIGHT);
+    printf("31\n");
+    for (uint16_t i = 0; i < SCREEN_HEIGHT; i++)
+    {
+        for (uint16_t j = 0; j < SCREEN_WIDTH; j++)
+        {
+            // if (FRAMEBUFFER[i][j] != 0)
+            // {
+            uint8_t r = (FRAMEBUFFER[i][j] >> 11) & 0x1F;
+            uint8_t g = (FRAMEBUFFER[i][j] >> 5) & 0x3F;
+            uint8_t b = FRAMEBUFFER[i][j] & 0x1F;
+            printf("%u %u %u\n", r, g, b);
+            // }
+        }
+        sleep_ms(1);
+    }
     printf("\n");
     fflush(stdout);
 

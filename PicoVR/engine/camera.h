@@ -14,6 +14,11 @@
 const static vec3_t CAMERA_POS = {0.0f, 0.0f, 1.0f};
 const static vec3_t CAMERA_UP = {0.0f, 1.0f, 0.0f};
 const static vec3_t CAMERA_FORWARD = {0.0f, 0.0f, 1.0f};
+const static vec2_t CAMERA_LOWER_LEFT_CORNER = {-5.0f, 0.0f};
+const static vec2_t CAMERA_UPPER_RIGHT_CORNER = {5.0f, 10.0f};
+const static float CAMERA_WIDTH = CAMERA_UPPER_RIGHT_CORNER.x - CAMERA_LOWER_LEFT_CORNER.x;
+const static float CAMERA_HEIGHT = CAMERA_UPPER_RIGHT_CORNER.y - CAMERA_LOWER_LEFT_CORNER.y;
+const static float CAMERA_NEAR_PLANE = 0.1f;
 
 /*
 

@@ -9,6 +9,26 @@
 
 #include <stdint.h>
 
+typedef struct vec2_t
+{
+    /**
+     * @brief vec2_t (heterogeneous)
+     *
+     * Struct vec2_t contains information regarding the
+     * x, y coordinates representing this vector.
+     *
+     * @details
+     * According to the RP2350 datasheet (pg 124), it says that the the float
+     * type in C automatically uses the FPU on the chip. It also says the FPU
+     * has 32 32-bit single-precision registers or 16 64-bit double-precision
+     * registers (pg 128).
+     *
+     */
+
+    float x;
+    float y;
+} vec2_t;
+
 typedef struct vec3_t
 {
 

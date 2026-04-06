@@ -35,6 +35,15 @@ static int time_taken(clock_t start, clock_t end)
     printf("Time taken: %ds %dms %dus\n", s, ms, us);
 }
 
+static void print_vec2(const vec2_t *const v)
+{
+    /**
+     * @brief Printing the components of a vec2.
+     */
+
+    printf("[%f %f]\n", v->x, v->y);
+}
+
 static void print_vec3(const vec3_t *const v)
 {
 
