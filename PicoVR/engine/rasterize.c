@@ -50,23 +50,14 @@ void rasterize(const triangle32_t *t0)
     v2.x = (v2.x + 1) / 2 * SCREEN_WIDTH;
     v2.y = (1 - v2.y) / 2 * SCREEN_HEIGHT;
 
-    // printf("V0");
-    // print_vec2(&v0);
-    // printf("V1");
-    // print_vec2(&v1);
-    // printf("V2");
-    // print_vec2(&v2);
-
     // Compute triangle bounding box
     uint16_t lp = (uint16_t)MAX(0.0f, MIN(v0.x, MIN(v1.x, v2.x)));
-    uint16_t rp = (uint16_t)MIN(SCREEN_WIDTH - 1, MAX(v0.x, MAX(v1.x, v2.x)) + 1);
+    uint16_t rp = (uint16_t)MIN(SCREEN_WIDTH - 1, ceilf(MAX(v0.x, MAX(v1.x, v2.x))));
     uint16_t bp = (uint16_t)MAX(0.0f, MIN(v0.y, MIN(v1.y, v2.y)));
-    uint16_t tp = (uint16_t)MIN(SCREEN_HEIGHT - 1, MAX(v0.y, MAX(v1.y, v2.y)) + 1);
+    uint16_t tp = (uint16_t)MIN(SCREEN_HEIGHT - 1, ceilf(MAX(v0.y, MAX(v1.y, v2.y))));
 
     // Temp color 9, 20, 16
     color16_t c = 19088;
-
-    // printf("BOUNDING BOX: %i %i %i %i\n", lp, rp, bp, tp);
 
     // Edge detection given bounding box of triangle
     vec2_t E0 = {v1.x - v0.x, v1.y - v0.y};
@@ -79,7 +70,7 @@ void rasterize(const triangle32_t *t0)
             vec2_t P = {i + 0.5f, j + 0.5f};
             vec2_t V0_P = {P.x - v0.x, P.y - v0.y};
             vec2_t V1_P = {P.x - v1.x, P.y - v1.y};
-            vec2_t V2_P = {P.x - v2.x, P.x - v2.y};
+            vec2_t V2_P = {P.x - v2.x, P.y - v2.y};
 
             // Vertices should be specified in CCW order, so to the right
             // of the vector should be (+)
@@ -87,7 +78,7 @@ void rasterize(const triangle32_t *t0)
             float e0_cross = V0_P.x * E0.y - V0_P.y * E0.x;
             float e1_cross = V1_P.x * E1.y - V1_P.y * E1.x;
             float e2_cross = V2_P.x * E2.y - V2_P.y * E2.x;
-            if (e0_cross >= 0 && e1_cross >= 0 && e2_cross <= 0)
+            if (e0_cross >= 0 && e1_cross >= 0 && e2_cross >= 0)
             {
                 FRAMEBUFFER[j][i] = c;
             }

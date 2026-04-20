@@ -43,9 +43,9 @@ int main()
      * important.
      */
 
-    vec3_t v0 = {-1.0f, 10.0f, -1.0f};
-    vertex32_t v1 = {1.0f, 10.0f, -1.0f};
-    vertex32_t v2 = {0.0f, 20.0f, -1.0f};
+    vec3_t v0 = {-5.0f, 10.0f, -1.0f};
+    vertex32_t v1 = {5.0f, 10.0f, -1.0f};
+    vertex32_t v2 = {0.0f, 17.0f, -1.0f};
     vec4_t v3 = {1.0f, 2.0f, 3.0f, 4.0f};
     triangle32_t t = {v0, v1, v2};
     mat4_t m = {{{2.0f, 1.0f, 1.0f, 1.0f},
@@ -61,6 +61,7 @@ int main()
     printf("P3\n");
     printf("%i %i\n", SCREEN_WIDTH, SCREEN_HEIGHT);
     printf("31\n");
+    int cnt = 0;
     for (uint16_t i = 0; i < SCREEN_HEIGHT; i++)
     {
         for (uint16_t j = 0; j < SCREEN_WIDTH; j++)
@@ -71,11 +72,10 @@ int main()
             uint8_t g = (FRAMEBUFFER[i][j] >> 5) & 0x3F;
             uint8_t b = FRAMEBUFFER[i][j] & 0x1F;
             printf("%u %u %u\n", r, g, b);
+            sleep_ms(10);
             // }
         }
-        sleep_ms(1);
     }
-    printf("\n");
     fflush(stdout);
 
     // // Default blink script for debugging
